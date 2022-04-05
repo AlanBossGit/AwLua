@@ -1,0 +1,59 @@
+----UI面板的基类：
+--_G.BaseView = class("BaseView")
+--
+--
+--UiLayer = {
+--    SceneName = 0,				-- 场景名字
+--    FloatText = 1,				-- 飘字
+--    MainUILow = 2,				-- 主界面(低)
+--    MainUI = 3,					-- 主界面
+--    MainUIHigh = 4,				-- 主界面(高)
+--    Normal = 5,					-- 普通界面
+--    Pop = 6,					-- 弹出框
+--    PopWhite = 7,				-- 透明弹出框
+--    PopTop = 8,					-- 弹出框(高)
+--    Guide = 9,					-- 引导层
+--    SceneLoading = 10,			-- 场景加载层
+--    SceneLoadingPop = 11,		-- 场景加载层上的弹出层
+--    Disconnect = 12,			-- 断线面板弹出层
+--    Standby = 13,				-- 待机遮罩
+--    MaxLayer = 14
+--}
+--
+--function _G.BaseView:initialize()
+--
+--end
+--
+--
+----加载面板预制体：
+--function _G.BaseView:Load(prefab_name)
+--    self:OpenCallBack()
+--    panelMgr:CreatePanel(prefab_name, self.OnCreate);
+--end
+--
+--
+--function _G:BaseView:OnCreate()
+--    self:
+--end
+--
+---------【生命周期(star)】------
+--
+--function _G.BaseView:OpenCallBack()
+--
+--end
+--function _G.BaseView:LoadCallBack()
+--
+--end
+--function _G.BaseView:FlushView()
+--
+--end
+--
+--function _G.BaseView:CloseCallBack()
+--
+--end
+--
+--function _G.BaseView:ReleaseCallBack()
+--
+--end
+--
+----------【生命周期(end)】---------
