@@ -1,6 +1,7 @@
-local ManagerCenter = class("ManagerCenter")
+ ManagerCenter = ManagerCenter or BaseClass()
 
-function ManagerCenter:Initialize()
+function ManagerCenter:__init()
+    ManagerCenter.Instance = self
     self.managers = {}
     --C# Manager--
     --着色器管理器
@@ -15,13 +16,11 @@ function ManagerCenter:Initialize()
     --Lua Manager--
 
     --添加处理UI的控制器的管理器
-    self:AddManager(ManagerNames.Ctrl, require("Logic/CtrlManager"), true)
+    --self:AddManager(ManagerNames.Ctrl, require("Logic/CtrlManager"), true)
     --控制视图面板加载和销毁的数据管理器
-    self:AddManager(ManagerNames.BaseViewLoader,require("MyClass/uicontroller/BaseViewLoader"),true)
+    --self:AddManager(ManagerNames.BaseViewLoader,require("MyClass/uicontroller/BaseViewLoader"),true)
     --控制视图面板开关的管理器：
-    self:AddManager(ManagerNames.UIManager,require("MyClass/uicontroller/UIManager"),true)
-
-
+    --self:AddManager(ManagerNames.UIManager,require("MyClass/uicontroller/UIManager"),true)
     --    --self:AddManager(ManagerNames.Adapter, require "Manager.AdapterManager", true)
     --    --self:AddManager(ManagerNames.Map, require "Manager.MapManager", true)
     --    --self:AddManager(ManagerNames.Level, require "Manager.LevelManager", true)
@@ -37,6 +36,20 @@ function ManagerCenter:Initialize()
 
     logWarn('ManagerCenter:InitializeOK...')
 end
+function ManagerCenter:__delete()
+    --销毁所有来自Lua管理器的注册
+    for k,v in pairs(ManagerNames) do
+        self:RemoveManager(v,true)
+    end
+
+    for k,v in pairs(CS_ManagerNames) do
+        self:RemoveManager(v,false)
+    end
+
+    ManagerCenter.Instance  = nil
+end
+
+
 
 function ManagerCenter:AddManager(name, manager, needInit)
     if name == nil or manager == nil then
@@ -68,5 +81,3 @@ end
 function ManagerCenter:GetExtManager(name)
     return ManagementCenter.GetExtManager(name)
 end
-
-return ManagerCenter

@@ -1,4 +1,4 @@
-local ManagerCenter = require "MyClass/common/ManagerCenter"
+
 
 local InitRequire = {
     ctrl_state = CTRL_STATE.START,
@@ -45,11 +45,6 @@ function InitRequire:Update(now_time, elapse_time)
 end
 
 function InitRequire:Finish()
-    --管理器初始化：
-    MgrCenter = ManagerCenter:new()
-    MgrCenter:Initialize()
-    --获得控制类
-    local ctrlMgr = MgrCenter:GetManager(ManagerNames.Ctrl)
     --例子模式：
     if AppConst.ExampleMode == 1 then
         local ctrl = ctrlMgr:GetCtrl(CtrlNames.Prompt);
@@ -58,12 +53,12 @@ function InitRequire:Finish()
         end
     else
         --正式游戏:
-        local ctrl_list = ctrlMgr:GetAllCtrl()
-        for k,v in pairs(ctrl_list) do
-            if v then
-                v:__init()
-            end
-        end
+        --local ctrl_list = ctrlMgr:GetAllCtrl()
+        --for k,v in pairs(ctrl_list) do
+        --    if v then
+        --        v:__init()
+        --    end
+        --end
     end
 end
 return InitRequire

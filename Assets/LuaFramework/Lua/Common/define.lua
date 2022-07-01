@@ -6,7 +6,7 @@ CtrlNames = {
 }
 
 
---面板名称
+--面板名称(例子)
 PanelNames = {
 	"PromptPanel",	
 	"MessagePanel",
@@ -28,11 +28,9 @@ CS_ManagerNames ={
 	Resource = "ResourceManager",			--加载管理器
 }
 
---来自lua层管理器的名称：
+--来自lua层管理器的名称：（弃用）
 ManagerNames = {
-	Ctrl = "CtrlManager",  					--注册UI面板的控制类
-	BaseViewLoader = "BaseViewLoader",		--视图面板加载管理器
-	UIManager = "UIManager",				--控制视图开关的管理器
+
 }
 
 --当前使用的协议类型--
@@ -45,6 +43,7 @@ ByteBuffer = LuaFramework.ByteBuffer;
 
 resMgr = LuaHelper.GetResManager();
 panelMgr = LuaHelper.GetPanelManager();	--老做法
+
 soundMgr = LuaHelper.GetSoundManager();
 networkMgr = LuaHelper.GetNetManager();
 

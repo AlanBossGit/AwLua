@@ -1,20 +1,24 @@
 require("MyClass/game/TestGameDemo/test_game_data")
 require("MyClass/game/TestGameDemo/test_game_view")
-TestGameCtrl = class("TestGameCtrl")
-
-function TestGameCtrl:initialize()
-
-end
+TestGameCtrl = TestGameCtrl or BaseClass()
 
 function TestGameCtrl:__init()
-    self.view = TextGameView:new()
-    self.data = TextGameData:new()
+    print_log("++ TestGameCtrl:__init()")
+    self.view = TextGameView.New(UIViewName.testView)
+    self.data = TextGameData.New()
 end
 
 function TestGameCtrl:__delete()
-   -- print_log("TestGameCtrl:__delete()")
+    print_log("+++++++!23")
+    if self.view then
+        self.view:DeleteMe()
+        self.view = nil
+    end
+    if  self.data then
+        self.data:DeleteMe()
+        self.data = nil
+    end
+    print_log("TestGameCtrl:__delete()")
 end
 
-function TestGameCtrl:Update(time, delta_time)
 
-end

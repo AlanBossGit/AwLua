@@ -53,6 +53,9 @@ function Game.OnInitOK()
     --初始化require列表（Alan）
     PushCtrl(require("Common/init_require"))
 
+    local play = require("play")
+    play:SetComplete(function()  end)
+    PushCtrl(play)
     logWarn('LuaFramework InitOK--->>>');
 end
 

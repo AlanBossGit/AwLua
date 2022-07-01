@@ -7,24 +7,24 @@ local middleclass = {
 
     Copyright (c) 2011 Enrique García Cota
 
-    Permission is hereby granted, free of charge, to any person obtaining a
-    copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
+    特此免费授予任何获得
+    本软件和相关文档文件的副本（
+    “软件”），不受限制地处理软件，包括
+    不限于使用、复制、修改、合并、发布的权利，
+    分发、再许可和/或出售软件的副本，以及
+    允许向其提供软件的人这样做，但须遵守
+    以下条件：
 
-    The above copyright notice and this permission notice shall be included
-    in all copies or substantial portions of the Software.
+    应包括上述版权声明和本许可声明
+    在软件的所有副本或主要部分中。
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    本软件按“原样”提供，不提供任何形式的明示保证
+    或暗示的，包括但不限于
+    适销性、特定用途的适用性和非侵权性。
+    在任何情况下，作者或版权所有者均不对任何
+    索赔、损害赔偿或其他责任，无论是在合同诉讼中，
+    侵权或其他原因，由
+    软件或软件中的使用或其他交易。
   ]]
 }
 
@@ -129,20 +129,20 @@ local DefaultMixin = {
 
     static = {
         allocate = function(self)
-            assert(type(self) == 'table', "Make sure that you are using 'Class:allocate' instead of 'Class.allocate'")
+            assert(type(self) == 'table', "确保您使用的是 'Class:allocate' 而不是 'Class.allocate'")
             return setmetatable({ class = self }, self.__instanceDict)
         end,
 
         new = function(self, ...)
-            assert(type(self) == 'table', "Make sure that you are using 'Class:new' instead of 'Class.new'")
+            assert(type(self) == 'table', "确保您使用的是 'Class:new' 而不是 'Class.new'")
             local instance = self:allocate()
             instance:initialize(...)
             return instance
         end,
 
         subclass = function(self, name)
-            assert(type(self) == 'table', "Make sure that you are using 'Class:subclass' instead of 'Class.subclass'")
-            assert(type(name) == "string", "You must provide a name(string) for your class")
+            assert(type(self) == 'table', "确保您使用的是 'Class:subclass' 而不是 'Class.subclass'")
+            assert(type(name) == "string", "您必须为您的类提供名称（字符串）")
 
             local subclass = _createClass(name, self)
 

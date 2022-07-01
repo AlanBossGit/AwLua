@@ -1,11 +1,13 @@
-TextGameData = class("TextGameData")
+TextGameData = TextGameData or BaseClass()
 
-function TextGameData:TestText()
-    print_log("测试函数TestText")
+function TextGameData:__init()
+    print_log("++TextGameData:__init()")
 end
 
 
-
+function TextGameData:__delete()
+    print_log("++TextGameData:__delete()")
+end
 
 
 

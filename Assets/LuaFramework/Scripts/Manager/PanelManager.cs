@@ -25,7 +25,7 @@ namespace LuaFramework {
         public void CreatePanel(string name, LuaFunction func = null) {
             string assetName = name + "Panel";
             string abName = name.ToLower() + AppConst.ExtName;
-            if (Parent.FindChild(name) != null) return;
+            if (Parent.Find(name) != null) return;
 
 #if ASYNC_MODE
             ResManager.LoadPrefab(abName, assetName, delegate(UnityEngine.Object[] objs) {
@@ -65,7 +65,7 @@ namespace LuaFramework {
         /// <param name="name"></param>
         public void ClosePanel(string name) {
             var panelName = name + "Panel";
-            var panelObj = Parent.FindChild(panelName);
+            var panelObj = Parent.Find(panelName);
             if (panelObj == null) return;
             Destroy(panelObj.gameObject);
         }

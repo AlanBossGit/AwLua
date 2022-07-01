@@ -1,13 +1,15 @@
-TextGameView = class("TextGameView",BaseView)
+TextGameView = TextGameView or BaseClass(BaseView)
 
-function TextGameView:initialize(view_name)
-    BaseView:initialize(view_name)
-    --panelMgr:CreatePanel('test', BindTool.Bind(self.OnCreate))
-end
-
-function TextGameView:OnCreate()
-
+function TextGameView:__init(view_name)
+    print_log("++ TextGameView:__init+++",view_name)
 end
 
 
+function TextGameView:__delete()
+    print_log("+++TextGameView:__delete()")
+end
 
+
+function TextGameView:LoadCallBack()
+    self.AddViewResource(0,"","")
+end

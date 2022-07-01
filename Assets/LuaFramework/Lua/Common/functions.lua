@@ -9,10 +9,14 @@ function _G.formatLog(...)
 	return strs
 end
 
-
 --字符串是否为空
 function _G.IsNullOrEmpty(str)
 	return nil == str or "" == str
+end
+
+--- 判断一个对象在C#端是否为空
+function _G.IsNil(uobj)
+	return uobj == nil or uobj:Equals(nil)
 end
 
 --输出日志--
@@ -174,9 +178,6 @@ function table.removeKey(t, k)
 	return v
 end
 
-function _G.isnil(uobj)
-	return uobj == nil or uobj:Equals(nil)
-end
 
 function _G.execAction(action)
 	LuaHelper.CallAction(action)

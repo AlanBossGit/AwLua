@@ -12,7 +12,6 @@ local ctrl_list = {}
 --是否为开发者模式
 IsDevelopModel = true
 
-
 --主入口函数。从这里开始lua逻辑
 function Main()
 --print("这是我的框架游戏")
@@ -65,19 +64,17 @@ end
 
 function GameQuit()
 	print("生命周期【GameQuit】函数")
-
-	--销毁所有来自Lua管理器的注册
-	for k,v in pairs(ManagerNames) do
-		MgrCenter:RemoveManager(v,true)
-	end
-	for k,v in pairs(CS_ManagerNames) do
-		MgrCenter:RemoveManager(v,false)
-	end
-	--管理器滞空
-	MgrCenter = nil
+	Trycall(function()
+		for k, v in pairs(ctrl_list) do
+			if v.Stop then
+				v:Stop()
+			end
+		end
+	end)
+	IsDevelopModel = nil
 end
 
----------------------- end -------------------------------
+-------------------------- end -------------------------------
 
 function PushCtrl(ctrl)
 	ctrl_list[ctrl] = ctrl
