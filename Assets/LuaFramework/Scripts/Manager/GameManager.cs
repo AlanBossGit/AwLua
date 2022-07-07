@@ -249,7 +249,7 @@ namespace LuaFramework {
             ObjPoolManager.Release<TestObjectClass>(new TestObjectClass("abcd", 100, 200f));
             var testObj1 = ObjPoolManager.Get<TestObjectClass>();
 
-            Debugger.Log("TestObjectClass--->>>" + testObj1.ToString());
+            //Debugger.Log("TestObjectClass--->>>" + testObj1.ToString());
 
             //游戏对象池测试
             var prefab = Resources.Load("TestGameObjectPrefab", typeof(GameObject)) as GameObject;
@@ -267,7 +267,7 @@ namespace LuaFramework {
                 backObj.transform.SetParent(null);
             }
 
-            Debug.Log("TestGameObject--->>>" + backObj);
+           // Debug.Log("TestGameObject--->>>" + backObj);
         }
 
         /// <summary>

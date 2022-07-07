@@ -1,5 +1,5 @@
 -- UI面板加载并存取类：
-BaseViewLoader = class("BaseViewLoader")
+BaseViewLoader = BaseViewLoader or BaseClass()
 
 function BaseViewLoader:__init()
     self.list_panel = {}
@@ -13,8 +13,7 @@ function BaseViewLoader:__init()
 
 end
 
-function BaseViewLoader:DeleteMe()
-    print_log("BaseViewLoader:__delete()")
+function BaseViewLoader:__delete()
     self.list_panel = {}
     self.wait_load_index_queue ={}
     self.source_obj_order_list = {}
@@ -81,9 +80,9 @@ function BaseViewLoader:Load(index, load_callback)
     table.insert(self.wait_load_index_queue, {index = index, load_callback = load_callback})
 end
 
-
 --资源加载：
 function BaseViewLoader:__DoLoad(index, load_callback)
+    print_log("资源加载：",index)
     if self.is_index_loading then
         print_error("[BaseViewLoader] __DoLoad正在执行，请检查代码", index)
         return
@@ -179,9 +178,9 @@ end
 function BaseViewLoader:__OnLoadComplete(index, load_callback)
     self.is_index_loaded_t[index] = true
     self.is_index_loading = false
-    load_callback(index,nil)
+    load_callback(index,self:GetLoadedIndexGameObjList(index))
     --判断是否继续加载下个资源
-    if #self.wait_load_index_queue>0 then
+    if #self.wait_load_index_queue > 0 then
         --永远移除第一个
         local load_t = table.remove(self.wait_load_index_queue,1)
         --加载下个资源
@@ -192,4 +191,23 @@ end
 -- 所有index下都要走load流程，不管index下有没有进行配置资源，以确保回调执行稳定一致
 function BaseViewLoader:IsLoadedIndex(index)
     return nil ~= self.is_index_loaded_t[index]
+end
+
+
+--
+function BaseViewLoader:GetLoadedIndexGameObjList(index)
+    if not self:IsLoadedIndex(index)then
+        print_error("BaseViewLoader] GetLoadedIndexGameObjList, index未加载完成",index)
+        return {}
+    end
+    local gameobj_list = {}
+    local resources_list = self:GetResourceListByIndex(inde)
+    for k,v in ipairs(resources_list) do
+        if not IsNil(v.gameobj) then
+            table.insert(gameobj_list,v.obj)
+        else
+            print_error("[BaseViewLoader] GetLoadedIndexGameObjList 严重错误, gameobj is nil", index)
+        end
+    end
+    return gameobj_list
 end

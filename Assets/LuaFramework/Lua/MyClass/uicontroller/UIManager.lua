@@ -17,7 +17,6 @@ function UIManager:__init()
 end
 
 function UIManager:__delete()
-    print_log("UIManager:__delete()")
     self.root_parent = nil
     self.ui_obj_prefab = nil
     self.open_panel_list = nil
@@ -36,12 +35,25 @@ function UIManager:GetUIObjPrefab()
 end
 
 --创建面板：
-function UIManager:Open(view_name, tab_index)
-    if self.open_panel_list[view_name] == nil then
-        --第一次生成面板时：
-
+function UIManager:Open(view_name, tab_index,key,values)
+    local now_view = self.view_list[view_name]
+    if nil ~= now_view then
+        local index = 0
+        if tonumber(tab_index) == nil and type(tab_index) =='string'then
+            index =TabIndex[tab_index]
+        else
+            index = tonumber(tab_index)
+        end
+    end
+    --判断该功能是否开启：
+    local isopen,tip_str = true,"该功能未开启"
+    if isopen then
+        if values ~= null then
+            now_view:Flush()
+        end
+        now_view:Open(index,value~=null)
     else
-
+        print_error("该功能未开启")
     end
 end
 
@@ -115,19 +127,6 @@ function UIManager:RemoveOpenView(view,ignore)
     end
 end
 
---打开面板：
-function UIManager:Open(view_name,tab_index,key,values)
-    local now_view = self.view_list[view_name]
-    if nil ~= now_view then
-        if tonumber(tab_index) ==  nil and type(tab_index) == 'string' then
-            --index = TabIndex[tab_index]
-        else
-            index = tonumber(tab_index)
-        end
-
-
-    end
-end
 
 
 return UIManager

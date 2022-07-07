@@ -4,6 +4,7 @@ using LuaFramework;
 
 public class StartUpCommand : ControllerCommand {
 
+    
     public override void Execute(IMessage message) {
         if (!Util.CheckEnvironment()) return;
 
@@ -24,5 +25,8 @@ public class StartUpCommand : ControllerCommand {
         AppFacade.Instance.AddManager<ThreadManager>(ManagerName.Thread);
         AppFacade.Instance.AddManager<ObjectPoolManager>(ManagerName.ObjectPool);
         AppFacade.Instance.AddManager<GameManager>(ManagerName.Game);
+
+        //注册游戏管理器：（Alan）
+        
     }
 }

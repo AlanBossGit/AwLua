@@ -39,17 +39,15 @@ end
 function ManagerCenter:__delete()
     --销毁所有来自Lua管理器的注册
     for k,v in pairs(ManagerNames) do
-        self:RemoveManager(v,true)
+        self:RemoveManager(v)
     end
 
     for k,v in pairs(CS_ManagerNames) do
-        self:RemoveManager(v,false)
+        self:RemoveManager(v)
     end
 
     ManagerCenter.Instance  = nil
 end
-
-
 
 function ManagerCenter:AddManager(name, manager, needInit)
     if name == nil or manager == nil then
@@ -59,7 +57,7 @@ function ManagerCenter:AddManager(name, manager, needInit)
     self.managers[name] = manager
     needInit = needInit or nil
     if needInit == true then
-        manager:__init()
+        manager:Initialize()
     end
 end
 
@@ -68,9 +66,6 @@ function ManagerCenter:GetManager(name)
 end
 
 function ManagerCenter:RemoveManager(name,is_need_delete)
-    if is_need_delete then
-        self.managers[name]:__delete()
-    end
     return table.removeKey(self.managers, name)
 end
 

@@ -16,9 +16,8 @@ function ModulesController:__init(is_quick_login)
 end
 
 function ModulesController:__delete()
-    print_log("++ModulesController:__delete()+")
-    self:DeleteCoreModule()
     self:DeleteControllers()
+    self:DeleteCoreModule()
 end
 
 --实力化核心模块类：
@@ -51,6 +50,8 @@ function ModulesController:Update(now_time, elapse_time)
         if self.cur_index >= #self.push_list then
             --self:OnAllCtrlInited()
             PopCtrl(self)
+            --print("—————————— ModulesController:Update(now_time, elapse_time)——————————",UIViewName.testViews)
+            UIManager.Instance:Open(UIViewName.testView,0)
             break
         end
     end
@@ -76,7 +77,6 @@ end
 
 --删除模块控制器
 function ModulesController:DeleteControllers()
-    print_log("++++ModulesController:DeleteControllers()++++")
     local count = #self.ctrl_list
     for i = count, 1, -1 do
         self.ctrl_list[i]:DeleteMe()

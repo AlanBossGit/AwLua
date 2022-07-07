@@ -14,7 +14,7 @@ function InitRequire:Start()
         if nil ~= self.require_list[i] then
             local path = self.require_list[i]
             Trycall(function()
-                print("导入的内容====>"..path)
+                --print("导入的内容====>"..path)
                 require(path)
             end, print_error)
             if not self:ExistLua(path) then

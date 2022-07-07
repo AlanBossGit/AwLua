@@ -2,11 +2,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Aw.Manager;
 
 public class AppFacade : Facade
 {
     private static AppFacade _instance;
-
     public AppFacade() : base()
     {
     }

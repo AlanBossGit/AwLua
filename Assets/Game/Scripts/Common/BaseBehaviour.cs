@@ -65,16 +65,18 @@ using UnityEngine;
         [NoToLua]
         public static void Initialize()
         {
+          
             InitManager();
         }
 
         /// <summary>
         /// 初始化管理器
         /// </summary>
-
         static void InitManager()
         {
-            AddManager<ShaderManager>(); //Shader管理器
+            Debug.Log("初始化+++InitManager");
+            AddManager<ShaderManager>();  //Shader管理器
+            AddManager<ResourceManager>();//Resource加载器
         }
 
         static T AddManager<T>() where T : BaseManager, new()
@@ -99,6 +101,7 @@ using UnityEngine;
         {
             if (!Managers.ContainsKey(managerName))
             {
+                Debug.Log("Managers.ContainsKey(managerName)");
                 return null;
             }
             return Managers[managerName];

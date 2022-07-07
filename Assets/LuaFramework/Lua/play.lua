@@ -31,7 +31,6 @@ function Play:Update(now_time, elapse_time)
 end
 
 function Play:Stop()
-    print_log("销毁+++++Play:Stop()+++")
     local count  = #self.module_list
     for i = count, 1 ,-1 do
         self.module_list[i]:DeleteMe()

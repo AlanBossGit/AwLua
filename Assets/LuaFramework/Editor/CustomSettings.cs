@@ -165,8 +165,7 @@ public static class CustomSettings
 
 
         //for LuaFramework
-        _GT(typeof(RectTransform)),
-        _GT(typeof(Text)),
+      
 
         _GT(typeof(Util)),
         _GT(typeof(AppConst)),
@@ -185,7 +184,19 @@ public static class CustomSettings
 
 
         //for Aw
-       _GT(typeof(Aw.Manager.ResourceManager))
+        _GT(typeof(Aw.Manager.ResourceManager)),
+
+        //UI组件：
+        _GT(typeof(RectTransform)),
+        _GT(typeof(Text)),
+        _GT(typeof(Button)),
+        _GT(typeof(Slider)),
+        _GT(typeof(RectTransform.Axis)),
+        _GT(typeof(Image)),
+        _GT(typeof(CanvasGroup)),
+        _GT(typeof(ContentSizeFitter)),
+        _GT(typeof(Canvas)),
+
     };
 
     public static List<Type> dynamicList = new List<Type>()

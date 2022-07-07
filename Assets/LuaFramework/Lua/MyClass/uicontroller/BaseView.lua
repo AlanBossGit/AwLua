@@ -1,5 +1,5 @@
 --UI面板的基类：
-BaseView = class("BaseView")
+BaseView = BaseView or BaseClass()
 
 UiLayer = {
     SceneName = 0,				-- 场景名字
@@ -21,7 +21,7 @@ UiLayer = {
 
 
 local def_view_name_index = 0                                --默认面板的索引值
-function BaseView:initialize(view_name)
+function BaseView:__init(view_name)
     self.is_open = false                                     --是否打开
     self.view_name = view_name                               --模块面板名字
     self.root_node = nil                                     --当前节点
@@ -29,29 +29,33 @@ function BaseView:initialize(view_name)
     self.canvas = nil                                        --当前Canvas
     self.node_list = {}                                      --node_list子节点列表
     self.view_layer = UiLayer.Normal                         --模块层级
-    self.view_render = BaseViewRender:new()                  --模块对象类
-    self.view_loader = BaseViewLoader:new()                  --资源加载类
+    self.view_render = BaseViewRender.New()                  --模块对象类
+    self.view_loader = BaseViewLoader.New()                  --资源加载类
     self.is_view_loade = false							     -- 是否已加载(index = 0)
     --#注册面板信息
     UIManager.Instance:RegisterView(self.view_name,self)
 end
+
+
+function BaseView:__delete()
+    UIManager.Instance:UnRegisterView(self.view_name)
+    if self.view_render then
+        self.view_render:DeleteMe()
+        self.view_render = nil
+    end
+
+    if self.view_loader then
+        self.view_loader:DeleteMe()
+        self.view_loader = nil
+    end
+end
+
 
 function BaseView:Release()
 
 
 end
 
---加载面板预制体：
-function BaseView:Load(abPath,panelName)
-    local resMgr = MgrCenter:GetManager(CS_ManagerNames.Resource)
-    resMgr:LoadAssetAsync(abPath, {panelName }, typeof(GameObject), function(objs)
-        if objs ~= nil and objs[0] ~= nil then
-            self:CreatePanelInternal(panelName, objs[0], parent, createOK)
-        end
-    end)
-    --panelMgr:CreatePanel(prefab_name, self.OnCreate);
-    --MgrCenter.GetManager(ManagerNames.UIManager):LoadPanel(,self.layoutType)
-end
 
 --御制体创建完成的回调：
 function BaseView:CreatePanelInternal(panelName, prefab, parent, createOK)
@@ -81,11 +85,10 @@ function BaseView:Open(index)
     self.root_node = root_node
     self.root_node_transform = gameobj_root_transform
     self.node_list = node_list
-    self.view_render:SetGameObjRootTransform(gameobj_root_transform)
     self.view_loader:SetGameObjRootTransform(gameobj_root_transform)
 
     self:OpenCallBack()
-    self:x(show_index)
+    self:ChangeToIndex(show_index)
     --添加到试图管理器
     UIManager.Instance:AddOpenView(self)
 end
@@ -101,9 +104,10 @@ function BaseView:ChangeToIndex(index)
     end
     if self.show_index == index then
         --刷新面板信息：
-        self:__TryFlushInex()
+        self:__TryFlushInex(index)
         return
     end
+    --新打开的面板索引
     self.show_index =index
     if self.view_loader:IsLoadedIndex(index) then
         self:__RefreshIndex(index)
@@ -115,22 +119,24 @@ function BaseView:ChangeToIndex(index)
         else
             index_list = {index}
         end
-
         for _,v in ipairs(index_list) do
             self:__LoadIndex(v)
         end
     end
 end
 
-
-
 --索引加载：
 function BaseView:__LoadIndex(index)
     self.view_loader:Load(index,function(index,gamobjs)
+        print_error("索引加载完成",index,gamobjs)
         self.is_view_loaded = true
     end)
 end
 
+
+function BaseView:Flush()
+    self:OnFlush()
+end
 
 --尝试刷新索引：
 function BaseView:__RefreshIndex(index)
@@ -157,9 +163,6 @@ function BaseView:GetLayer()
     return self.view_layer
 end
 
-
-
-
 -------【生命周期(star)】------
 
 function BaseView:OpenCallBack()
@@ -170,8 +173,8 @@ function BaseView:LoadCallBack()
 
 end
 
-function BaseView:FlushView()
-
+function BaseView:OnFlush()
+  
 end
 
 function BaseView:CloseCallBack()

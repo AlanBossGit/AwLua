@@ -44,8 +44,8 @@ function _G.findByTag(objName)
 end
 
 --创建一个对象--
-function _G.newObject(prefab,position,rotation,parent,instantiateWorldSpace)
-	return GameObject.Instantiate(prefab,position,rotation,parent,instantiateWorldSpace)
+function _G.newObject(prefab,position,rotation,parent)
+	return GameObject.Instantiate(prefab,position,rotation,parent)
 end
 
 --销毁一个对象--

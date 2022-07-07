@@ -36,7 +36,7 @@ public class ManagementCenter
     }
 
     public static BaseManager GetManager(string managerName)
-    {
+    { 
         return BaseBehaviour.GetManager(managerName);
     }
 

@@ -1,15 +1,18 @@
 TextGameView = TextGameView or BaseClass(BaseView)
 
-function TextGameView:__init(view_name)
-    print_log("++ TextGameView:__init+++",view_name)
+function TextGameView:__init()
+    self:AddViewResource(0,"ui/testPanel",testPanel);
+
 end
 
 
 function TextGameView:__delete()
-    print_log("+++TextGameView:__delete()")
 end
 
 
 function TextGameView:LoadCallBack()
     self.AddViewResource(0,"","")
 end
+function TextGameView:OnFlush()
+end
+

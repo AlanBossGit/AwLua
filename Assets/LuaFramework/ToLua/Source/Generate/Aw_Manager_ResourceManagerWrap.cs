@@ -7,6 +7,7 @@ public class Aw_Manager_ResourceManagerWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(Aw.Manager.ResourceManager), typeof(Aw.Manager.BaseManager));
+		L.RegFunction("InitInfo", InitInfo);
 		L.RegFunction("InitResManifest", InitResManifest);
 		L.RegFunction("TakeSnapshot", TakeSnapshot);
 		L.RegFunction("ClearSnapshot", ClearSnapshot);
@@ -34,6 +35,22 @@ public class Aw_Manager_ResourceManagerWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to ctor method: Aw.Manager.ResourceManager.New");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int InitInfo(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			Aw.Manager.ResourceManager obj = (Aw.Manager.ResourceManager)ToLua.CheckObject<Aw.Manager.ResourceManager>(L, 1);
+			obj.InitInfo();
+			return 0;
 		}
 		catch (Exception e)
 		{

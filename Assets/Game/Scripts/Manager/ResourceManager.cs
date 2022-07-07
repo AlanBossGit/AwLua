@@ -19,6 +19,19 @@ namespace Aw.Manager
         [NoToLua]
         public override void Initialize()
         {
+            Debug.Log("C#层加载器的初始化");
+            if (AppConst.DebugMode)
+            {
+                mSimMgr = new SimAssetManager(this);
+            }
+            else
+            {
+                mABMgr = new AssetBundleManager(this);
+            }
+        }
+
+        public void InitInfo()
+        {
             if (AppConst.DebugMode)
             {
                 mSimMgr = new SimAssetManager(this);
@@ -191,9 +204,14 @@ namespace Aw.Manager
 
         public void LoadAssetAsync<T>(string abName, string[] assetNames, Action<UObject[]> func)
         {
+            if (mSimMgr == null || mABMgr == null)
+            {
+                InitInfo();
+            }
             var assetType = typeof(T);
             if (AppConst.DebugMode)
             {
+              
                 mSimMgr.LoadAsset(abName, assetNames, assetType, func);
             }
             else
@@ -204,6 +222,10 @@ namespace Aw.Manager
 
         public void LoadAssetAsync(string abName, string[] assetNames, Type assetType, LuaFunction func)
         {
+            if (mSimMgr == null || mABMgr == null)
+            {
+                InitInfo();
+            }
             if (AppConst.DebugMode)
             {
                 mSimMgr.LoadAsset(abName, assetNames, assetType, null, func);

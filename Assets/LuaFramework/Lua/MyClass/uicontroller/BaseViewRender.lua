@@ -1,8 +1,8 @@
 --模块预制体类
-BaseViewRender = class("BaseViewRender")
+BaseViewRender = BaseViewRender or BaseClass()
 
 
-function BaseViewRender:initialize()
+function BaseViewRender:__init()
     self.view_name = "none_name"            --模块名字
     self.root_node = nil                    --模块节点（BaseView）
     self.root_node_transform = nil          --模块节点Transform
@@ -10,6 +10,11 @@ function BaseViewRender:initialize()
     self.root_transform = nil               --模块（Root）子节点Transform
     self.clear_z_obj = nil                  --z轴层级处理
     self:ResetNodeList()                    --重置初始化node_list
+end
+
+
+function BaseViewRender:__delete()
+
 end
 
 
@@ -54,7 +59,7 @@ function BaseViewRender:TryCreateRooNode()
     end
     --实力化一个模块到UI层下：
     local uiMgr = UIManager.Instance
-    self.root_node = newObject(uiMgr:GetUIObjPrefab(),Vector3.zero,Vector3.zero,uiMgr:GetRootParent(),true)
+    self.root_node = newObject(uiMgr:GetUIObjPrefab(),Vector3.zero,Quaternion.identity,uiMgr:GetRootParent().transform)
     --名字赋值：
     self.root_node.name = self.view_name
     --获取其Canvas：
@@ -65,6 +70,7 @@ function BaseViewRender:TryCreateRooNode()
     --z轴遮罩：
     local z_obj = self.root_node.transform:Find("UIClearZDepth")
     if not IsNil(z_obj) then
+
         self.clear_z_obj = z_obj:GetComponent(typeof(UnityEngine.UI.Image))
     end
     return self.root_node, self.root_canvas, self.root_transform, self.node_list

@@ -6,6 +6,7 @@ namespace LuaFramework {
     /// </summary>
     public class Main : MonoBehaviour {
         void Start() {
+            BaseBehaviour.Initialize();
             AppFacade.Instance.StartUp();   //启动游戏
         }
     }
