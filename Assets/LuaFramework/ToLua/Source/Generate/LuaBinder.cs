@@ -118,6 +118,9 @@ public static class LuaBinder
 		Aw_Manager_BaseManagerWrap.Register(L);
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("AW");
+		AW_UINameTableWrap.Register(L);
+		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);
 		L.RegFunction("Predicate_int", System_Predicate_int);

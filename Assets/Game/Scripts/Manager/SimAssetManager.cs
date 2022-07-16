@@ -92,13 +92,13 @@ namespace Aw.Manager
             }
             else
             {
-                Debug.Log("+++++++++++++++"+ assetNames);
+                //Debug.Log("+++++++++++++++"+ assetNames);
                 var dirName = abName.Substring(0, abName.LastIndexOf('/'));
-                Debug.Log("-------------" + dirName);
+               // Debug.Log("-------------" + dirName);
                 foreach (var name in assetNames)
                 {
                     var path = "Assets/Game/res/" + dirName + "/" + name + extName;
-                    Debug.Log("my obj "+ path);
+                   // Debug.Log("my obj "+ path);
                     var obj = AssetDatabase.LoadAssetAtPath(path, assetType);
                     if (obj == null)
                     {

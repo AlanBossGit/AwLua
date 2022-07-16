@@ -7,8 +7,6 @@ namespace AW
 	[AddComponentMenu("Nirvana/UI/Bind/UI Name Table")]
 	public sealed class UINameTable : MonoBehaviour
 	{
-		
-
 		[SerializeField]
 		[Tooltip("The bind list.")]
 		public List<BindPair> binds = new List<BindPair>();

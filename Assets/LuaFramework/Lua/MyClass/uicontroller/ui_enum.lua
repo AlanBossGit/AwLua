@@ -7,5 +7,5 @@ UICtrlNames = {
 
 --view的名字
 UIViewName = {
-    testView = "testView",
+    testView = "TestView",
 }

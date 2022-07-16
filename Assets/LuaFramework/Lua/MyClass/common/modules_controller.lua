@@ -22,14 +22,17 @@ end
 
 --实力化核心模块类：
 function ModulesController:CreateCoreModule()
+    ObjPoolManager.New()       -- 对象池管理器
     UIManager.New()            -- UI面板管理类
     ManagerCenter.New()        -- 管理器控制类（C#）
+
 end
 
 --移除核心类:
 function ModulesController:DeleteCoreModule()
     UIManager.Instance:DeleteMe()
     ManagerCenter.Instance:DeleteMe()
+    ObjPoolManager.Instance:DeleteMe()
 end
 
 function ModulesController:Star(call_back)

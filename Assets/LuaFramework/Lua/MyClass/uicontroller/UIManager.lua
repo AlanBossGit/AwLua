@@ -4,7 +4,6 @@ function UIManager:__init()
     UIManager.Instance = self
     --面板全局查找节点：
     self.root_parent = find("GameManager/UICanvas")
-
     --模块UI预制体
     self.ui_obj_prefab = find("GameManager/BaseView")
 
@@ -51,7 +50,7 @@ function UIManager:Open(view_name, tab_index,key,values)
         if values ~= null then
             now_view:Flush()
         end
-        now_view:Open(index,value~=null)
+        now_view:Open(tab_index)
     else
         print_error("该功能未开启")
     end

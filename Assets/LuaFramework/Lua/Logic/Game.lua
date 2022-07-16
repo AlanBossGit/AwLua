@@ -13,6 +13,7 @@ local print_r = require "3rd/sproto/print_r"
 
 require "Logic/LuaClass"
 require "Common/functions"
+require "MyClass/systool/u3dObject"
 --require "Controller/PromptCtrl"
 
 --管理器--

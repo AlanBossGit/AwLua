@@ -56,12 +56,6 @@ function BaseView:Release()
 
 end
 
-
---御制体创建完成的回调：
-function BaseView:CreatePanelInternal(panelName, prefab, parent, createOK)
-    self:LoadCallBack()
-end
-
 --打开面板：
 function BaseView:Open(index)
     local show_index = index
@@ -84,9 +78,9 @@ function BaseView:Open(index)
     self.canvas = root_canvas
     self.root_node = root_node
     self.root_node_transform = gameobj_root_transform
+    LogTable(node_list)
     self.node_list = node_list
     self.view_loader:SetGameObjRootTransform(gameobj_root_transform)
-
     self:OpenCallBack()
     self:ChangeToIndex(show_index)
     --添加到试图管理器
@@ -128,10 +122,15 @@ end
 --索引加载：
 function BaseView:__LoadIndex(index)
     self.view_loader:Load(index,function(index,gamobjs)
-        print_error("索引加载完成",index,gamobjs)
         self.is_view_loaded = true
+        self.view_render:AddRenderGameObjs(index, gamobjs)
+        if 0 == index then
+            self:LoadCallBack()
+        end
+        self:LoadIndexCallBack(index)
     end)
 end
+
 
 
 function BaseView:Flush()
@@ -169,12 +168,16 @@ function BaseView:OpenCallBack()
 
 end
 
-function BaseView:LoadCallBack()
+function BaseView:LoadIndexCallBack()
+--切换时索引时调用
+end
 
+function BaseView:LoadCallBack()
+--索引为0的时候调用（默认显示）
 end
 
 function BaseView:OnFlush()
-  
+
 end
 
 function BaseView:CloseCallBack()

@@ -14,7 +14,16 @@ function BaseViewLoader:__init()
 end
 
 function BaseViewLoader:__delete()
-    self.list_panel = {}
+
+    if self.list_panel then
+        for _, list in pairs(self.list_panel) do
+            for i,v in ipairs(list) do
+                v.obj = nil
+            end
+        end
+        self.list_panel = nil
+    end
+
     self.wait_load_index_queue ={}
     self.source_obj_order_list = {}
     self.gameobj_root_transform = nil
@@ -23,7 +32,7 @@ function BaseViewLoader:__delete()
 end
 
 --添加各个模块的ab面板预制体
-function BaseViewLoader:AddViewResource(index, bundle_name, asset_name,transform_cfg, safe_area_mode)
+function BaseViewLoader:AddViewResource(index, bundle_name, asset_name, safe_area_mode)
     if nil == index then
         print_error("[BaseViewLoader]AddViewResource 请指定index不要为nil")
         return
@@ -43,7 +52,7 @@ function BaseViewLoader:AddViewResource(index, bundle_name, asset_name,transform
     resource_obj.bundle_name = bundle_name
     resource_obj.asset_name = asset_name
     resource_obj.obj =  nil
-    resource_obj.transform_cfg = transform_cfg
+    resource_obj.transform_cfg = nil
     resource_obj.safe_area_mode = safe_area_mode
     table.insert(reource_list, resource_obj)
     table.insert(self.source_obj_order_list, resource_obj)
@@ -82,7 +91,6 @@ end
 
 --资源加载：
 function BaseViewLoader:__DoLoad(index, load_callback)
-    print_log("资源加载：",index)
     if self.is_index_loading then
         print_error("[BaseViewLoader] __DoLoad正在执行，请检查代码", index)
         return
@@ -100,18 +108,16 @@ function BaseViewLoader:__DoLoad(index, load_callback)
     end
     local load_count = #resource_list
     --资源加载器：
-    local resMgr = MgrCenter:GetManager(CS_ManagerNames.Resource)
+    local resMgr = ObjPoolManager.Instance
     for _,resources_obj in pairs(resource_list) do
         local bundle_name,asset_name = resources_obj.bundle_name,resources_obj.asset_name
-        resMgr:LoadAssetAsync(bundle_name, {asset_name}, typeof(GameObject), function(objs)
+        resMgr:CreateObj(bundle_name, asset_name, function(rend)
             load_count = load_count - 1
-            if objs ~= nil and objs[0] ~= nil then
-                --self:CreatePanelInternal(panelName, objs[0], parent, createOK)
-                objs[0].name = asset_name
+            if rend ~= nil and rend:GetView() then
+                resources_obj.obj = rend:GetView()
+                rend:SetName(asset_name)
+                rend:SetParent(self.gameobj_root_transform,false)
             end
-            resources_obj.obj = objs[0]
-            self:UpdateTransform(objs[0],resources_obj.transform_cfg)--更新父物体信息
-            self:UpdateSafeArea(objs[0],resources_obj.safe_area_mode)--刘海处理
             if load_count <=0 then
                 self.is_index_loading = false
                 self:UpdateOrder()--根据传入顺序排序
@@ -119,6 +125,14 @@ function BaseViewLoader:__DoLoad(index, load_callback)
             end
         end)
     end
+end
+
+--通过索引获取预制体的对象
+function BaseViewLoader:GetResourceListByIndex(index)
+    if nil ~= self.list_panel[index] then
+        return self.list_panel[index]
+    end
+    return self.list_panel[0] or {}
 end
 
 -- 排序（根据Add传入顺序排序）
@@ -201,9 +215,9 @@ function BaseViewLoader:GetLoadedIndexGameObjList(index)
         return {}
     end
     local gameobj_list = {}
-    local resources_list = self:GetResourceListByIndex(inde)
+    local resources_list = self:GetResourceListByIndex(index)
     for k,v in ipairs(resources_list) do
-        if not IsNil(v.gameobj) then
+        if not IsNil(v.obj) then
             table.insert(gameobj_list,v.obj)
         else
             print_error("[BaseViewLoader] GetLoadedIndexGameObjList 严重错误, gameobj is nil", index)

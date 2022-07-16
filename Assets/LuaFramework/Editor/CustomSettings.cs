@@ -7,6 +7,7 @@ using UnityEditor;
 using BindType = ToLuaMenu.BindType;
 using UnityEngine.UI;
 using System.Reflection;
+using AW;
 
 public static class CustomSettings
 {
@@ -158,7 +159,7 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)), 
 		_GT(typeof(Resources)),      
 		_GT(typeof(LuaProfiler)),
-
+        
 
 
 
@@ -196,7 +197,8 @@ public static class CustomSettings
         _GT(typeof(CanvasGroup)),
         _GT(typeof(ContentSizeFitter)),
         _GT(typeof(Canvas)),
-
+        _GT(typeof(UINameTable)),
+     
     };
 
     public static List<Type> dynamicList = new List<Type>()
