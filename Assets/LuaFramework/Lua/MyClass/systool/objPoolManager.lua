@@ -46,16 +46,3 @@ function ObjPoolManager:CreateObj(bundle_name,asset_name,onfinish,onfail)
         onfinish(go_render)
     end)
 end
-
---################ ObjRender #################--
-
-ObjectRender = ObjectRender or BaseClass(BaseRender)
-
-
-function ObjectRender :__init()
-
-end
-
-function ObjectRender:__delete()
-
-end
