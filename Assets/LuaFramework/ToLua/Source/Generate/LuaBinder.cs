@@ -60,6 +60,7 @@ public static class LuaBinder
 		UnityEngine_RectTransformWrap.Register(L);
 		UnityEngine_CanvasGroupWrap.Register(L);
 		UnityEngine_CanvasWrap.Register(L);
+		UnityEngine_SpriteWrap.Register(L);
 		UnityEngine_AudioBehaviourWrap.Register(L);
 		L.BeginModule("UI");
 		UnityEngine_UI_TextWrap.Register(L);

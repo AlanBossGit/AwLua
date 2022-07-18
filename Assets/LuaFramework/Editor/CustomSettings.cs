@@ -190,15 +190,16 @@ public static class CustomSettings
         //UI组件：
         _GT(typeof(RectTransform)),
         _GT(typeof(Text)),
-        _GT(typeof(Button)),
+        _GT(typeof(Button)).AddExtendType(typeof(AW.ButtonExtensions)),
         _GT(typeof(Slider)),
         _GT(typeof(RectTransform.Axis)),
-        _GT(typeof(Image)),
+        _GT(typeof(Image)).AddExtendType(typeof(AW.ImageExtensions)),
         _GT(typeof(CanvasGroup)),
         _GT(typeof(ContentSizeFitter)),
         _GT(typeof(Canvas)),
         _GT(typeof(UINameTable)),
-     
+        _GT(typeof(Sprite)),
+       
     };
 
     public static List<Type> dynamicList = new List<Type>()

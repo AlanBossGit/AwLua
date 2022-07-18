@@ -61,17 +61,13 @@ namespace Aw.Manager
 
         public void LoadAsset(string abName, string[] assetNames, Type assetType, Action<UObject[]> action = null, LuaFunction func = null)
         {
-            Debug.Log("abName="+ assetNames.Length + "assetType" + assetType);
             var result = new List<UObject>();
 #if UNITY_EDITOR
             var extName = GetExtName(assetType);
-            Debug.Log("^^^^^" + extName);
             if (assetNames == null)
             {
-                Debug.Log("进来了");
                 UObject[] objs = null;
                 var assetPath = Application.dataPath + "/Game/res/" + abName + extName;
-                Debug.Log("************"+ assetPath);
                 if (File.Exists(assetPath))
                 {
                     var path = "Assets/Game/res/" + abName + extName;
@@ -92,13 +88,11 @@ namespace Aw.Manager
             }
             else
             {
-                //Debug.Log("+++++++++++++++"+ assetNames);
                 var dirName = abName.Substring(0, abName.LastIndexOf('/'));
-               // Debug.Log("-------------" + dirName);
                 foreach (var name in assetNames)
                 {
                     var path = "Assets/Game/res/" + dirName + "/" + name + extName;
-                   // Debug.Log("my obj "+ path);
+                    Debug.Log("assetType"+path);
                     var obj = AssetDatabase.LoadAssetAtPath(path, assetType);
                     if (obj == null)
                     {

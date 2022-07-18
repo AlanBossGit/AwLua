@@ -17,7 +17,7 @@ local component_table = {
     --rect = typeof(UnityEngine.RectTransform),
     --canvas = typeof(UnityEngine.Canvas),
     --canvas_group = typeof(UnityEngine.CanvasGroup),
-    --image = typeof(UnityEngine.UI.Image),
+    image = typeof(UnityEngine.UI.Image),
     --raw_image = typeof(UnityEngine.UI.RawImage),
     text = typeof(UnityEngine.UI.Text),
     button = typeof(UnityEngine.UI.Button),
@@ -67,7 +67,6 @@ local u3d_metatable = {
         end
         local key_type = component_table[key]
         if key_type ~= nil then
-            print_log("table.gameObject:",table.gameObject.name,"type:",key_type)
             local commpoent = table.gameObject:GetComponent(key_type)
             if commpoent ~= nil then
                 local metatable = component_table[key_type]

@@ -1,7 +1,7 @@
 TextGameView = TextGameView or BaseClass(BaseView)
 
 function TextGameView:__init()
-    self:AddViewResource(0,"ui/testPanel","testPanel");
+   self:AddViewResource(0,"ui/test/testPanel","testPanel");
 
 end
 
@@ -10,9 +10,14 @@ function TextGameView:__delete()
 
 end
 
-
 function TextGameView:LoadCallBack()
-    --XUI.RemoveAllListener(self.node_list["TestButton"],BindTool.Bind(self.OnClickGetReward, self))
+    --self.resMgr =  ManagerCenter.Instance:GetManager(CS_ManagerNames.Resource)
+    --self.resMgr:LoadAssetAsync("ui/img/warrior_woman", {"warrior_woman"}, typeof(UnityEngine.Sprite), function(sr)
+    --    print_error("-------------->>>",sr)
+    --end)
+    XUI.AddClickEventListener(self.node_list["TestButton"],function()
+        self:OnClickGetReward()
+    end)
 end
 
 function TextGameView:OnFlush()
